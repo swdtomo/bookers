@@ -8,4 +8,5 @@ Rails.application.routes.draw do
   root to: 'homes#top'
   #「resources :lists」この記述必要ないかも。最初に間違えて作ったやつの名残説
   resources :books
+  get 'lits/:id' => 'list#show'
 end
