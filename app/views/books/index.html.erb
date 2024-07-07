@@ -7,15 +7,27 @@
 <% end %>
 
 <h1>Books</h1>
-  <p>Title</p>
-  <p>Body</p>
+<table>
+<tr>
+ <th>Title</th>
+ <th>Body</th>
+ <th></th>
+</tr>
+ <tbody>
 <% @books.each do |book| %>
-　<p><%= book.title %></p>
-  <p><%= book.body %></p>
+
+ <tr>
+　<td><%= book.title %></td>
+  <td><%= book.body %></td>
+  <td>
   <%= link_to 'Show', book_path(book) %>
   <%= link_to 'Edit', edit_book_path(book) %>
   <%= link_to 'Destroy', book_path(book), method: :delete, data: { confirm: '本当に削除しますか？' } %>
+  </td>
+ </tr>
+ </tbody>
 <% end %>
+</table>
   <!--上の記述は7/4 17:48の19:02:52の内容をコピー-->
 
 
