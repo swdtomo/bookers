@@ -1,3 +1,11 @@
+<% flash.each do |key, value| %>
+  <% if key == "success" %>
+    <div class="success">
+      <%= value %>
+    </div>
+  <% end %>
+<% end %>
+
 <h3>Title:</h3>
 <p><%= @book.title %></p>
 
@@ -5,9 +13,10 @@
 <p><%= @book.body %></p>
 
 <span>
-  <%= link_to "Edit", "/books/edit" %>
+  <%= link_to "Edit", edit_book_path(@book) %>
 </span>
 
 <span>
   <%= link_to "Back", "/books/index" %>
 </span>
+

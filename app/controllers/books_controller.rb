@@ -4,12 +4,16 @@ class BooksController < ApplicationController
   end
 
   def create
-    book = Book.new(list_params)
-    book.save
-    redirect_to root_url
+    @book = Book.new(list_params)
+   if @book.save
+      flash[:success] = "Book was successfully created."
+    redirect_to book_url(@book)
+   else
+     @books = Book.all
+    render :index
+   end
   end
-   #topに戻る設定したけど、editとbackが表示されるようにしたい(保存中redirect_to root_url)
-   
+
 
   def index
     @books = Book.all
@@ -22,11 +26,26 @@ class BooksController < ApplicationController
   end
 
   def edit
+    @book = Book.find(params[:id])
+  end
+
+  def update
+    book = Book.find(params[:id])
+    book.update(list_params)
+    flash[:success] = "Book was successfully updated."
+    redirect_to book_path(book.id)
+  end
+
+  def destroy
+    book = Book.find(params[:id])
+    book.destroy
+    flash[:success] = "Book was successfully destroyed."
+    redirect_to '/books'
   end
 
   private
   #ストロングパラメータ「:book」であってるか？（:list）かも
   def list_params
-   params.require(:book).permit(:title, :body)
+   params[:book].present? ? params.require(:book).permit(:title, :body) : {}
   end
 end
