@@ -1,3 +1,10 @@
+
+<% if flash[:error] %>
+  <div class="error">
+    <%= flash[:error] %>
+  </div>
+<% end %>
+
 <% flash.each do |key, value| %>
   <% if key == "success" %>
     <div class="success">

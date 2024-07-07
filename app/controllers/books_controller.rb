@@ -3,17 +3,28 @@ class BooksController < ApplicationController
    @book = Book.new
   end
 
-  def create
-    @book = Book.new(list_params)
-   if @book.save
-      flash[:success] = "Book was successfully created."
+ def create
+  @book = Book.new(list_params)
+  if @book.save
+    flash[:success] = "Book was successfully created."
     redirect_to book_url(@book)
-   else
-     @books = Book.all
+  else
+    @books = Book.all
+    flash.now[:error] = "Failed to create the book."
     render :index
-   end
   end
+end
 
+def update
+  @book = Book.find(params[:id])
+  if @book.update(list_params)
+    flash[:success] = "Book was successfully updated."
+    redirect_to book_path(@book.id)
+  else
+    flash[:error] = @book.errors.full_messages.join("<br>").html_safe
+    render :edit
+  end
+end
 
   def index
     @books = Book.all
@@ -29,12 +40,6 @@ class BooksController < ApplicationController
     @book = Book.find(params[:id])
   end
 
-  def update
-    book = Book.find(params[:id])
-    book.update(list_params)
-    flash[:success] = "Book was successfully updated."
-    redirect_to book_path(book.id)
-  end
 
   def destroy
     book = Book.find(params[:id])
